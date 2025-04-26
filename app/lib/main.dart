@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shoprite/screens/landing_page.dart';
+import 'package:shoprite/screens/home_page.dart';
 import 'constants/colors.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LandingPage(),
+      home: HomePage(),
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(),
     );
@@ -44,6 +44,26 @@ ThemeData _buildTheme() {
         foregroundColor: kBackgroundColor,
         shadowColor: Colors.transparent,
         textStyle: _customTextStyle(16, FontWeight.w700, kBackgroundColor),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: Colors.white,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      hintStyle: _customTextStyle(16, FontWeight.w500, kTextColor),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(32.0),
+        borderSide: const BorderSide(
+          color: kPrimaryColor,
+          width: 0.5,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(32.0),
+        borderSide: const BorderSide(
+          color: kSecondaryColor,
+          width: 0.2,
+        ),
       ),
     ),
   );
