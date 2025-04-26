@@ -31,8 +31,8 @@ export async function searchProducts(query) {
 
         const productName = $(el).find('h2[aria-label]').text().trim();
 
-        let currentPrice = $(el).find('span.a-price > span.a-offscreen').first().text().trim();
-        let originalPrice = $(el).find('span.a-price.a-text-price > span.a-offscreen').text().trim();
+        let currentPrice = parseFloat($(el).find('span.a-price > span.a-offscreen').first().text().trim().replace('₹', '').replace(',', ''));
+        let originalPrice = parseFloat($(el).find('span.a-price.a-text-price > span.a-offscreen').text().trim().replace('₹', '').replace(',', ''));
 
         products.push({
             productName,

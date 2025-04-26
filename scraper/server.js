@@ -72,6 +72,14 @@ app.get('/api/search', async (req, res) => {
             ...(amazonProducts.status === 'fulfilled' ? amazonProducts.value.map((product) => ({ ...product, vendor: 'Amazon' })) : []),
         ];
 
+        //sort combinedProducts by currentPrice
+        combinedProducts.sort((a, b) => {
+            if (a.currentPrice === null && b.currentPrice === null) return 0;
+            if (a.currentPrice === null) return 1;
+            if (b.currentPrice === null) return -1;
+            return a.currentPrice - b.currentPrice;
+        });
+
         res.json({ products: combinedProducts });
     } catch (error) {
         console.error('Search API error:', error);

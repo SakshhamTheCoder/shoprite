@@ -38,10 +38,10 @@ export async function searchProducts(query) {
             .filter(function () {
                 return $(this).find('div:contains("₹")').length === 0;
             })[0];
-        currentPrice = $(current).text().trim();
+        currentPrice = parseFloat($(current).text().trim().replace('₹', '').replace(',', ''));
 
         const original = $(current).siblings('div:contains("₹")')[0];
-        originalPrice = $(original).text().trim();
+        originalPrice = parseFloat($(original).text().trim().replace('₹', '').replace(',', ''));
         if (!originalPrice) {
             originalPrice = currentPrice;
         }
