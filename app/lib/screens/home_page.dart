@@ -4,6 +4,7 @@ import 'package:shoprite/components/default_scaffold.dart';
 import 'package:shoprite/components/input_field.dart';
 import 'package:shoprite/constants/colors.dart';
 import 'package:shoprite/external/api_client.dart';
+import 'package:shoprite/external/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -99,10 +100,15 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               title: Text(currentProduct["productName"]),
-                              subtitle: Text("${currentProduct["currentPrice"]} -  ${currentProduct["vendor"]}"),
-                              leading: currentProduct["vendor"] == "Flipkart"
+                              subtitle: Text(
+                                  "${Utils.formatPrice(currentProduct["currentPrice"])} -  ${currentProduct["vendor"]}"),
+                              leading: currentProduct["vendor"] != null
                                   ? Image.network(
-                                      "https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/logo_lite-cbb357.png",
+                                      currentProduct["vendor"] == "Flipkart"
+                                          ? "https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/logo_lite-cbb357.png"
+                                          : currentProduct["vendor"] == "Amazon"
+                                              ? "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
+                                              : "https://via.placeholder.com/30",
                                       height: 30,
                                       errorBuilder: (context, error, stackTrace) {
                                         return const Icon(Icons.store);
@@ -124,17 +130,16 @@ class _HomePageState extends State<HomePage> {
                                         child: Image.network(
                                           currentProduct["thumbnail"],
                                           errorBuilder: (context, error, stackTrace) {
-                                            return SizedBox(height: 120, width: 120, child: Icon(Icons.error));
+                                            return SizedBox(height: 100, width: 100, child: Icon(Icons.error));
                                           },
                                           loadingBuilder: (context, child, loadingProgress) {
                                             if (loadingProgress == null) return child;
                                             return Container(
-                                                height: 120,
-                                                width: 120,
+                                                height: 100,
+                                                width: 100,
                                                 decoration: const BoxDecoration(color: Colors.grey));
                                           },
-                                          height: 120,
-                                          width: 120,
+                                          width: 100,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -145,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              currentProduct["currentPrice"],
+                                              Utils.formatPrice(currentProduct["currentPrice"]),
                                               style: const TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
@@ -153,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             ),
                                             Text(
-                                              currentProduct["originalPrice"],
+                                              Utils.formatPrice(currentProduct["originalPrice"]),
                                               style: const TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
